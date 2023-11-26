@@ -9,6 +9,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //1. GET a random joke
 
+app.get("/random", (req, res) => {
+  const randomIndex = Math.floor(Math.random * jokes.length);
+  // random수 생성
+  res.json(jokes[randomIndex]);
+  // 클라이언트로 json 값을 보내기
+})
+
 //2. GET a specific joke
 
 //3. GET a jokes by filtering on the joke type
