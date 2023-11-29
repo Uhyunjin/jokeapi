@@ -37,6 +37,20 @@ app.get("/filter", (req, res) => {
 })
 
 //4. POST a new joke
+app.post("/jokes", (req, res) => {
+
+  const newJoke = {
+    id : jokes.length+1,
+    jokeText : req.body.text,
+    jokeType : req.body.type,
+  };
+  // 입력된 body parameter를 이용해 joke 배열에 새로 push할 newJoke를 생성
+
+  jokes.push(newJoke);
+  console.log(jokes.slice(-1));
+  // 콘솔에 jokes 배열의 마지막 요소를 프린트
+  res.jason(newJoke);
+})
 
 //5. PUT a joke
 
