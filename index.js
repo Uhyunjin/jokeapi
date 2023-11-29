@@ -6,6 +6,8 @@ const port = 3000;
 const masterKey = "4VGP2DN-6EWM4SJ-N6FGRHV-Z3PR3TT";
 
 app.use(bodyParser.urlencoded({ extended: true }));
+// bodyparser 코드
+// req.body에 탭하기 위한 코드
 
 //1. GET a random joke
 
@@ -53,6 +55,20 @@ app.post("/jokes", (req, res) => {
 })
 
 //5. PUT a joke
+app.put("/jokes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const replacementJoke = {
+    id : id,
+    jokeText : req.body.text,
+    jokeType : req.body.type,
+  };
+
+  const searchIndex = jokes.findIndex((joke) => joke.id === id);
+  jokes[searchIndex] = replacementJoke;
+  
+  res.json(replacementJoke);
+})
+// 모든 body 부분들을 전부 대체
 
 //6. PATCH a joke
 
