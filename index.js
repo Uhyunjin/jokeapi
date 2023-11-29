@@ -28,6 +28,13 @@ app.get("/jokes/:id", (req, res) => {
 });
 
 //3. GET a jokes by filtering on the joke type
+app.get("/filter", (req, res) => {
+  const type = req.params.type;
+  // 경로의 각 쿼리 문자열 매개변수에 대한 속성이 포함된 개체(주로 get요청)
+  const filteredActivities = jokes.filter((joke) => joke.jokeType === type);
+  // filter 메서드를 사용하여 joke배열 안의 조건에 해당하는 모든 joke배열을 반환
+  res.json(filteredActivities);
+})
 
 //4. POST a new joke
 
