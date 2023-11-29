@@ -19,8 +19,12 @@ app.get("/random", (req, res) => {
 //2. GET a specific joke
 app.get("/jokes/:id", (req, res) => {
   const id = parseInt(req.params.id);
+  // 요청받은 url의 id를 int로 변경
   const foundJoke = jokes.find((joke) => joke.id === id);
+  // type까지 정확한 비교를 위해 삼중등호 사용
+  // find메서드 사용하여 배열에서 특정 id를 가진 joke를 찾아 콜백 후 foundJoke로 반환
   res.json(foundJoke);
+  // foundJoke를 json으로 응답
 });
 
 //3. GET a jokes by filtering on the joke type
