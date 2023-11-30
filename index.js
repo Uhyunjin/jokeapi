@@ -87,8 +87,39 @@ app.patch("/jokes/:id", (req, res) => {
 })
 
 //7. DELETE Specific joke
+app.delete("/jokes/:id", (res, req) => {
+  const id = parseInt(req.params.id);
+  const deleteIndex = jokes.findIndex((joke) => joke.id === id);
+  // jokes.splice(deleteIndex, 1);
+  // index가 음수인지 양수인지 따져봐야한다 오류 방지
+  if (deleteIndex > -1) {
+  jokes.splice(deleteIndex, 1);
+  res.sendStatus(200);
+  } else {
+    res
+    .statusCode(404)
+    .json({ error: `Joke with id: ${id} not found.
+    No jokes were deleted.` })
+    // 오류 내용 전달
+  }
+  
+})
 
 //8. DELETE All jokes
+// 모든걸 삭제하는건 위험하므로 마스터키가 필요
+// 쿼리 파라미터에 추가
+app.delete("/all", (req, res) => {
+  const userKey = req.query.key;
+  if (userKey === masterKey) {
+    jokes = [];
+    res.sendStatus(200);
+  } else {
+    res
+    .status(404)
+    .json({error: `You are not authorized to perform this action.`});
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Successfully started server on port ${port}.`);
