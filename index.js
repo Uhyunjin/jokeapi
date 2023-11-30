@@ -25,12 +25,66 @@ app.get("/jokes/:id", (req, res) => {
 //url이나 경로 매개변수에 탭하는 방법
 
 //3. GET a jokes by filtering on the joke type
+app.get("/filter", (req, res) => {
+  const filterType = req.query.type;
+  const foundJokes = jokes.filter((joke) => joke.jokeType === filterType);
+  res.json(foundJokes);
+})
 
 //4. POST a new joke
+app.post("/jokes", (req, res) => {
+  const id = jokes.length +1;
+  const newJoke = {
+    id : id,
+    type : req.body.type,
+    text : req.body.text,
+  };
+  jokes.push(newJoke);
+  console.log(newJoke);
+  res.json(jokes.slice(-1));
+
+  //jokes.slick(-1)과 newJoke의 차이???
+})
 
 //5. PUT a joke
+app.put("/jokes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const replacementJoke = {
+    id : id,
+    type : req.body.type,
+    text : req.body.text,
+  };
+  const replacementIndex = jokes.findIndex((joke) => joke.id === id);
+  jokes[replacementIndex] = replacementJoke;
+
+  res.json(replacementJoke);
+  console.log(jokes[replacementIndex]);
+
+})
 
 //6. PATCH a joke
+app.patch("/jokes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  
+  const existingJoke = jokes.find((joke) => joke.id === id);
+
+  const editedJoke = {
+    // id : id,
+    // type : req.body.jokeType || jokes[id].jokeType,
+    // text : req.body.jokeText || jokes[id].jokeText,
+    // id가 0부터 시작하지 않고 원본(existing joke)을 먼저 찾아야함
+
+    id : id,
+    type : req.body.type || existingJoke.jokeType,
+    text : req.body.text || existingJoke.jokeText,
+    
+  };
+
+  const editedIndex = jokes.findIndex((joke) => joke.id === id);
+  jokes[editedIndex] = editedJoke;
+  console.log(jokes.slice(-1));
+  res.json(editedJoke)
+})
 
 //7. DELETE Specific joke
 
