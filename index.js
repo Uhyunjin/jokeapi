@@ -111,7 +111,7 @@ app.delete("/jokes/:id", (res, req) => {
 app.delete("/all", (req, res) => {
   const userKey = req.query.key;
   if (userKey === masterKey) {
-    jokes = [];
+    jokes = []; // jokes 배열 비우기
     res.sendStatus(200);
   } else {
     res
